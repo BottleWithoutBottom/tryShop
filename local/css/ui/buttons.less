@@ -1,0 +1,39 @@
+@import '../_vars';
+
+.underlined-button {
+    position: relative;
+    padding: 10px 10px;
+    margin: 5px 10px;
+    text-decoration: none;
+
+    &:after {
+        content: '';
+        border-bottom: 3px solid @cWhite;
+        position: absolute;
+        width: 0;
+        top: 30px;
+        left: 0;
+        transition: width @transitTime;
+    }
+
+    &:hover {
+        &:after {
+            width: 100%;
+        }
+    }
+}
+
+.bordered-button {
+    text-decoration: none;
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: @cWhite;
+    color: @cPurple;
+    border-radius: 10px;
+    transition: color @transitTime, background-color @transitTime;
+
+    &:hover {
+        color: @cLightPurple;
+        background: @cSilver;
+    }
+}

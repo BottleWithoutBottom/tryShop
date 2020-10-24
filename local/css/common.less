@@ -1,0 +1,35 @@
+@import '_vars';
+* {
+    box-sizing: border-box;
+}
+
+.page-wrapper {
+    position: relative;
+}
+
+.button-green {
+    position: relative;
+    padding: 10px 20px;
+    background-color: @cGreen;
+    color: @cWhite;
+    text-decoration: none;
+    border: none;
+    border-radius: 10px;
+    transition: background-color @transitTime;
+
+    &:hover {
+        text-decoration: underline;
+        background-color: @cDarkGreen
+    }
+}
+
+.background-particles {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+}
+
+.container {
+    position: relative;
+}

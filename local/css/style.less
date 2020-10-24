@@ -1,0 +1,38 @@
+@import '_vars';
+@import '_fonts';
+
+
+@import './layouts/header';
+@import './layouts/grid';
+
+@import 'common';
+@import 'ui/buttons';
+
+@import './page/main';
+@import './page/categories';
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    position: relative;
+}
+
+.page-wrapper {
+    font-family: @fMont;
+    font-weight: @fRegular;
+    height: 100%;
+}
+
+.container {
+    width: 80%;
+    max-width: @maxContainerWidth;
+    margin: 0 auto;
+}
+
+.background-particles {
+    display: block;
+    position: absolute;
+}

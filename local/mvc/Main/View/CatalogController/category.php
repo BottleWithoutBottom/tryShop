@@ -1,0 +1,7 @@
+<?
+
+?>
+
+<? if (!empty($categories)): ?>
+
+<? endif; ?>

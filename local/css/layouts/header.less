@@ -1,0 +1,70 @@
+@import '../_vars';
+
+header {
+    background-color: @cLightPurple;
+    padding: 10px 20px;
+    z-index: 100;
+
+    a {
+        color: @cWhite;
+        border-bottom-color: @cWhite;
+    }
+
+    .logo {
+        text-decoration: none;
+        font-size: 32px;
+        font-weight: @fBold;
+    }
+
+    .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .auth-controller {
+            display: flex;
+            justify-content: space-between;
+
+            .icon {
+                position: relative;
+
+                .dropdown {
+                    .size(100px);
+                    background: @cWhite;
+                    display: none;
+                    position: absolute;
+                    bottom: -110px;
+                    left: -40px;
+                    z-index: 1000;
+                    border-radius: @borderRadius;
+                    -webkit-box-shadow: 3px 13px 37px -10px rgba(0,0,0,0.50);
+                    -moz-box-shadow: 3px 13px 37px -10px rgba(0,0,0,0.50);
+                    box-shadow: 3px 13px 37px -10px rgba(0,0,0,0.50);
+
+                    &.active {
+                        display: flex;
+                    }
+
+                    &:after {
+                        content: '';
+                        .size(0);
+                        position: absolute;
+                        border: 10px solid transparent;
+                        border-bottom-color: @cWhite;
+                        border-top: 0;
+                        top: -10px;
+                        left: 40px;
+                    }
+                }
+            }
+
+            .icon:not(:last-of-type) {
+                margin-right: 10px;
+            }
+
+            .fas {
+                color: @cWhite;
+            }
+        }
+    }
+}

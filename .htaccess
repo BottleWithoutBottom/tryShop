@@ -1,0 +1,21 @@
+#RewriteEngine on
+#
+#RewriteRule .* index.php?systemurl=$0 [QSA]
+#RewriteCond %{REQUEST_FILENAME}% !-f
+#
+#<FilesMatch "^index.(php)$">
+#    Allow from all
+#</FilesMatch>
+
+
+AddDefaultCharset utf-8
+
+RewriteEngine on
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [L,QSA]
+
+<Files "\.(png|img|css|js)$">
+    Allow from all
+</Files>
