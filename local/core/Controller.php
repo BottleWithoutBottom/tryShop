@@ -9,11 +9,17 @@ abstract class Controller {
     protected $view;
     protected $model;
     protected $user;
+    protected $isAuthorized;
+
     public function __construct($route) {
         $this->setRoute($route);
         $this->view = new View($this->getRoute());
         $this->model = $this->bindModel($this->route['controller']);
         $this->user = new User();
+        if ($this->user->isAuthorized()) {
+            $this->user->authorizeUserById();
+            $this->isAuthorized = true;
+        }
     }
 
     public function getRoute() {

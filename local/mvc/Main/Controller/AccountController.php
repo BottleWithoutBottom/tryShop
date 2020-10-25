@@ -8,20 +8,39 @@ class AccountController extends Controller {
     protected $password;
     protected $email;
     protected $phone;
+    protected $remember;
 
     public function indexAction() {
         $this->view->render('Личный кабинет');
     }
 
-    public function loginAction() {
-
-    }
-
     public function regAction() {
-        $this->view->render('Регистрация', [], 'reg');
+        $params = [];
+        if ($this->user->isAuthorized()) {
+            $params['isAuthorized'] = true;
+            $params['message'] = 'Вы уже авторизованы';
+            $params['text'] = 'Вернуться на главную страницу';
+        }
+
+        $this->view->render('Регистрация', $params, 'reg');
     }
 
-    public function registerAction() {
+    public function loginAction() {
+        $params = [];
+        if ($this->user->isAuthorized()) {
+            $params['isAuthorized'] = true;
+            $params['message'] = 'Вы уже авторизованы';
+            $params['text'] = 'Вернуться на главную страницу';
+        }
+
+        $this->view->render('Авторизация', $params, 'login');
+    }
+
+    public function logoutAction() {
+        $this->model->logout();
+    }
+
+    public function registerAJAXAction() {
         if(!empty($_POST)) {
             $this->login = $_POST['login'] ? htmlspecialchars(strip_tags($_POST['login'])) : '';
             $this->password = $_POST['password'] ? htmlspecialchars(strip_tags($_POST['password'])) : '';
@@ -33,6 +52,20 @@ class AccountController extends Controller {
                 'password' => $this->password,
                 'email' => $this->password,
                 'phone' => $this->phone,
+            ]);
+        }
+    }
+
+    public function loginAJAXAction() {
+        if (!empty($_POST)) {
+            $this->login = $_POST['login'] ? htmlspecialchars(strip_tags($_POST['login'])) : '';
+            $this->password = $_POST['password'] ? htmlspecialchars(strip_tags($_POST['password'])) : '';
+            $this->remember = $_POST['remember'] ? htmlspecialchars(strip_tags($_POST['remember'])) : '';
+
+            $this->model->login([
+                'login' => $this->login,
+                'password' => $this->password,
+                'remember' => $this->remember,
             ]);
         }
     }

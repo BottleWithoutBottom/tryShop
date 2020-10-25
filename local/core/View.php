@@ -1,14 +1,19 @@
 <?php
 
 namespace local\core;
+use local\core\User;
 
 class View {
     protected $header = 'header';
     protected $footer = 'footer';
     protected $view;
     protected $route;
+    protected $user;
+    protected $isAuthorized;
 
     public function __construct($route) {
+        $this->user = new User();
+        $this->isAuthorized = $this->user->isAuthorized();
         $this->setRoute($route);
         $this->view = $this->route['controller'] . '/' . $this->route['action'];
     }
@@ -24,6 +29,7 @@ class View {
             ob_start();
             require MVC_VIEWS_PATH . $this->view . '.php';
             $inner = ob_get_clean();
+            $isAuthorized = $this->isAuthorized;
             require $header;
             require $footer;
         } elseif (!file_exists($header)) {

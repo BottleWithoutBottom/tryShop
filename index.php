@@ -5,7 +5,6 @@ spl_autoload_register(function ($class_name) {
 });
 use local\core\Router;
 
-session_start();
 $router = new Router();
 $router->executeRouter();
 ?>

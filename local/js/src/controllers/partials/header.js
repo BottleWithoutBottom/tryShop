@@ -18,7 +18,9 @@ const Header = Control.extend({
                 !underMouse.hasClass(this.options.headerIcon)
                 || !underMouse.closest(this.options.headerIcon)
             ) {
-                this.$element.find(this.options.dropdown).toggleClass('active', false);
+                let openedDropdown = this.$element.find(this.options.dropdown);
+                if (!openedDropdown.hasClass('active')) return;
+                openedDropdown.toggleClass('active', false);
             }
         },
 

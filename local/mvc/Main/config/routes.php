@@ -46,6 +46,17 @@ return [
         'action' => 'index',
 
         'children' => [
+            '/account/login/' => [
+                'controller' => 'AccountController',
+                'action' => 'login',
+
+                'children' => [
+                    '/account/authorize/' => [
+                        'controller' => 'AccountController',
+                        'action' => 'loginAJAX',
+                    ]
+                ]
+            ],
             '/account/reg/' => [
                 'controller' => 'AccountController',
                 'action' => 'reg',
@@ -53,10 +64,14 @@ return [
                 'children' => [
                     '/account/register/' => [
                         'controller' => 'AccountController',
-                        'action' => 'register'
+                        'action' => 'registerAJAX'
                     ]
                 ]
             ],
+            '/account/logout/' => [
+                'controller' => 'AccountController',
+                'action' => 'logout',
+            ]
         ]
     ],
 ];

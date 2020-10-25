@@ -11,23 +11,63 @@ class Session {
 
     public function __construct() {
         $this->db = Database::getInstance();
+        session_start();
     }
 
     public function getSession() {
         $token = self::getSessid();
-        if ($session = $this->db->select(self::SESSION_TABLE, [self::SESSION_TOKEN, '=', $token])) {
+        if ($session = $this->getSessionByToken($token)) {
             return $session;
         } else {
             return false;
         }
     }
 
-    public static function getSessid() {
+    public function getSessionFromCookie() {
+        $token = self::getSessidFromCookie();
+        if ($session = $this->getSessionByToken($token)) {
+            return $session;
+        } else {
+            return false;
+        }
+    }
+
+    public static function getSessid(): string {
         if (!empty($_SESSION[self::SESSID])) {
             return $_SESSION[self::SESSID];
         } else {
             return false;
         }
+    }
+
+    public static function deleteSessid(): bool {
+        if (!empty($_SESSION[self::SESSID])) {
+           unset($_SESSION[self::SESSID]);
+           return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function deleteSessidFromCookie():bool {
+        if (!empty($_COOKE[self::SESSID])) {
+            setCookie(self::SESSID, '', time() - 1, g_ROOT);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function getSessidFromCookie(): string {
+        if (!empty($_COOKIE[self::SESSID])) {
+            return $_COOKIE[self::SESSID];
+        } else {
+            return false;
+        }
+    }
+
+    private function getSessionByToken($token) {
+        return $this->db->select(self::SESSION_TABLE, [self::SESSION_TOKEN, '=', $token])->getResults()[0];
     }
 
     public function setSession($user_id) {
@@ -41,6 +81,13 @@ class Session {
             );
 
             $_SESSION[self::SESSID] = $token;
+        }
+    }
+
+    /** Помещает в куки токен пользователя */
+    public function setRememberCookie($token) {
+        if (!empty($token)) {
+            setCookie(self::SESSID, $token, time() + 3600 * 24 * 7, g_ROOT);
         }
     }
 
