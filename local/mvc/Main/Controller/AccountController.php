@@ -37,7 +37,11 @@ class AccountController extends Controller {
     }
 
     public function logoutAction() {
-        $this->model->logout();
+        if (!$this->user->isAuthorized()) {
+            header('Location: ' . g_ROOT);
+            exit();
+        }
+        $this->user->logout();
     }
 
     public function registerAJAXAction() {
@@ -47,12 +51,24 @@ class AccountController extends Controller {
             $this->email = $_POST['email'] ? htmlspecialchars(strip_tags($_POST['email'])) : '';
             $this->phone = $_POST['phone'] ? htmlspecialchars(strip_tags($_POST['phone'])) : '';
 
-            $this->model->register([
-                'login' => $this->login,
-                'password' => $this->password,
-                'email' => $this->password,
-                'phone' => $this->phone,
-            ]);
+            if (
+                !empty($this->login) && !empty($this->password)
+                && !empty($this->email) && !empty($this-phone)
+            ) {
+                $this->user->prepareUser([
+                    'login' => $this->login,
+                    'password' => $this->password,
+                    'email' => $this->email,
+//                    'phone' => $this->phone,
+                ]);
+                if ($this->user->register()) {
+                    echo json_encode(['success' => true, 'message' => 'you were registered successfully']);
+                } else {
+                    echo json_encode(['success' => false, 'message' => 'register hasn\'t happend']);
+                }
+            } else {
+                echo json_encode(['success' => false, 'message' => 'some data is empty, check it again']);
+            }
         }
     }
 
@@ -62,11 +78,20 @@ class AccountController extends Controller {
             $this->password = $_POST['password'] ? htmlspecialchars(strip_tags($_POST['password'])) : '';
             $this->remember = $_POST['remember'] ? htmlspecialchars(strip_tags($_POST['remember'])) : '';
 
-            $this->model->login([
-                'login' => $this->login,
-                'password' => $this->password,
-                'remember' => $this->remember,
-            ]);
+            if (!empty($this->login) && !empty($this->password)) {
+                $this->user->prepareUser([
+                    'login' => $this->login,
+                    'password' => $this->password,
+                    'remember' => $this->remember,
+                ]);
+                if ($this->user->authorize()) {
+                    echo json_encode(['success' => true, 'message' => 'you logined in']);
+                } else {
+                    echo json_encode(['success' => false, 'message' => 'something went wrong, check your data again']);
+                }
+            } else {
+                echo json_encode(['success' => false, 'message' => 'some data was not filled in, check it again']);
+            }
         }
     }
 }

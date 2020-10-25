@@ -37,7 +37,7 @@
                 <div class="authorized icon js-header-icon<?= $isAuthorized ? ' active' : '' ?>"><a href="javascript:void(0)" title="Личный кабинет"><i class="fas fa-user"></i></a></div>
                 <div class="logout icon js-header-icon<?= $isAuthorized ? ' active' : '' ?>""><a href="<?= g_ROOT ?>account/logout/" title="Выйти"><i class="fas fa-sign-out-alt"></i></a></div>
 
-                <div class="cart icon js-header-icon"><a href="javascript:void(0)" title="Корзина"><i class="fas fa-shopping-cart"></i></a></div>
+                <div class="cart icon js-header-icon<?= $isAuthorized ? ' active' : '' ?>"><a href="javascript:void(0)" title="Корзина"><i class="fas fa-shopping-cart"></i></a></div>
             </div>
         </div>
     </header>

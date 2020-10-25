@@ -69,7 +69,7 @@ class User {
         }
     }
 
-    public function authorize(): string {
+    public function authorize() {
         if (!empty($this->login)) {
             $user = $this->db->select(self::USER_TABLE, ['login', '=', $this->login])->getResults()[0];
             if (self::checkPassword($this->password, $user->password)) {
@@ -77,17 +77,8 @@ class User {
                 if ($this->remember) {
                     $this->session->setRememberCookie($_SESSION[Session::SESSID]);
                 }
-
-                echo json_encode([
-                    'success' => true,
-                    'message' => 'successfull authorization',
-                ]);
-                return true;
+                header('Location: ' . g_ROOT);
             } else {
-                echo json_encode([
-                    'success' => false,
-                    'message' => 'some data is not correct, please, check your data',
-                ]);
                 return false;
             }
         }
