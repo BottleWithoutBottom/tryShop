@@ -1,7 +1,7 @@
 <?php
 
 namespace local\core;
-use local\core\User;
+use local\mvc\Manager\Controller\UserController;
 
 class View {
     protected $header = 'header';
@@ -10,10 +10,11 @@ class View {
     protected $route;
     protected $user;
     protected $isAuthorized;
+    CONST SESSID = 'sessid';
 
     public function __construct($route) {
-        $this->user = new User();
-        $this->isAuthorized = $this->user->isAuthorized();
+        $this->user = new UserController();
+        $this->isAuthorized = $this->user->isAuthorized(self::SESSID);
         $this->setRoute($route);
         $this->view = $this->route['controller'] . '/' . $this->route['action'];
     }

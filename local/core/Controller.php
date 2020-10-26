@@ -2,23 +2,33 @@
 
 namespace local\core;
 use local\core\View;
-use local\core\User;
+use local\mvc\Manager\Controller\SessionController;
+use local\mvc\Manager\Controller\CookieController;
+use local\mvc\Manager\Controller\UserController;
 
 abstract class Controller {
     protected $route;
     protected $view;
     protected $model;
     protected $user;
-    protected $isAuthorized;
+    protected $isAuthorized = false;
+    protected $sessid;
+    protected $session_token;
+    CONST SESSID = 'sessid';
 
     public function __construct($route) {
         $this->setRoute($route);
         $this->view = new View($this->getRoute());
         $this->model = $this->bindModel($this->route['controller']);
-        $this->user = new User();
-        if ($this->user->isAuthorized()) {
-            $this->user->authorizeUserById();
-            $this->isAuthorized = true;
+        $this->user = new UserController();
+        $this->session_token = SessionController::getSessionName(self::SESSID) ?: CookieController::getCookieName(self::SESSID);
+
+        if ($this->session_token) {
+            $this->sessid = SessionController::getSession(self::SESSID) ?: (CookieController::getCookie(self::SESSID) ?: false);
+            if ($this->user->isAuthorized($this->sessid)) {
+                $this->user->authorizeBySessid($this->sessid);
+                $this->isAuthorized = true;
+            }
         }
     }
 
