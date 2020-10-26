@@ -1,7 +1,9 @@
 <?
+/* @var array $categoryElements */
+/* @var array $currentCategory */
 
 ?>
 
-<? if (!empty($categories)): ?>
+<? if (!empty($categoryElements)): ?>
 
 <? endif; ?>

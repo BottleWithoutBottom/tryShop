@@ -29,6 +29,7 @@
     "gulp-rename": "^2.0.0",
     "jquery": "^3.5.1",
     "jquery-parallax.js": "^1.5.0",
+    "select2": "^4.0.13",
     "webpack-stream": "^6.1.0"
   }
 }

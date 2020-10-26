@@ -1,6 +1,5 @@
 <?
 /** $categories @array */
-
 if (count($categories)): ?>
     <div class="row categories-list">
         <? foreach($categories as $category): ?>
@@ -14,7 +13,7 @@ if (count($categories)): ?>
 
                 <div class="content">
                     <p><?= $category->DESCRIPTION ?></p>
-                    <a href="javascript:void(0)" class="bordered-button">Перейти</a>
+                    <a href="<?= $category->link ?>" class="bordered-button">Перейти</a>
                 </div>
             </div>
         <? endforeach; ?>
