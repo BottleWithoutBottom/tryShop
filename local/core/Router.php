@@ -38,10 +38,12 @@ class Router {
                     $maskParams = Helper::generateKeysFromMask($_SERVER['REQUEST_URI'], $params['maskPattern'], $params['mask'], '#:[a-zA-Z_]*#');
                     $this->params = $params;
                     $this->params['additional'] = $maskParams;
+                    $this->params['REQUEST_URI'] = $_SERVER['REQUEST_URI'];
                     return true;
                 }
             } else if(preg_match($route, $_SERVER['REQUEST_URI'])) {
                 $this->params = $params;
+                $this->params['REQUEST_URI'] = $_SERVER['REQUEST_URI'];
                 return true;
             }
         }

@@ -4,15 +4,6 @@ return [
     '/' => [
         'controller' => 'MainController',
         'action' => 'index',
-
-        'children' => [
-            '/:id/' => [
-                'pattern' => '#^/[0-9]*/$#',
-                'maskPattern' => '#^/[0-9]*/$#',
-                'controller' => 'MainController',
-                'action' => 'index',
-            ]
-        ]
     ],
     '/catalog/' => [
         'controller' => 'CatalogController',
@@ -24,9 +15,9 @@ return [
                 'action' => 'categories',
             ],
 
-            '/catalog/category/:category_id/' => [
-                'pattern' => '#^/catalog/category/([0-9])*/#',
-                'maskPattern' => '#/([0-9])*/#',
+            '/catalog/category/:category_code/' => [
+                'pattern' => '#^/catalog/category/([0-9a-zA-Z])*/#',
+                'maskPattern' => '#/([0-9a-zA-Z])*/#',
                 'controller' => 'CatalogController',
                 'action' => 'category',
             ],

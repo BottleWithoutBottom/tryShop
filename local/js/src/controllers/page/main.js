@@ -46,7 +46,7 @@ const MainPage = Control.extend(
     }
 );
 if (document.querySelector('body').dataset.pageType === 'main') {
-    new MainPage(document.querySelector('body[data-page-type=main]'));
+    new MainPage(document.querySelector('body'));
 
 }
 export {MainPage}

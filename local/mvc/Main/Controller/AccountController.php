@@ -17,7 +17,7 @@ class AccountController extends Controller {
 
     public function regAction() {
         $params = [];
-        if ($this->user->isAuthorized($this->sessid)) {
+        if ($this->user->isAuthorized(parent::SESSID)) {
             $params['isAuthorized'] = true;
             $params['message'] = 'Вы уже авторизованы';
             $params['text'] = 'Вернуться на главную страницу';
