@@ -8,6 +8,14 @@ class BasePopup {
          * cancel - string
          *
          * */
+        this.classes = {
+            popupWrap: 'popup-wrap',
+            popupLayout: 'popup-layout',
+            popupWindow: 'popup-window',
+            popupInterface: 'popup-window-interface',
+            popupControllers: 'popup-window-controllers',
+        };
+
         this.message = params.message ? params.message : '';
         this.success = params.success ? params.success : '';
         this.cancel =    params.cancel ? params.cancel : '';
@@ -16,23 +24,8 @@ class BasePopup {
         this.layoutIsSet = params.layoutIsSet ? params.layoutIsSet : true;
         this.layoutColor = params.layoutColor ? params.layoutColor : '#000';
         this.layoutOpacity = params.layoutOpacity ? params.layoutOpacity : '.5';
-        this.windowColor = params.windowColor ? params.windowColor : '#fff';
-
-        /* Неотъемлемые части для любого попапа */
-
-        this.popupWrap = document.createElement('div');
-        this.popupWrap.classList.add('popup-container');
-        this.popupLayout = document.createElement('div');
-        this.popupLayout.classList.add('popup-layout');
-
-        this.popupWindow = document.createElement('div');
-        this.popupWindow.classList.add('popup-window');
-
-        this.popupInterface = document.createElement('div');
-        this.popupInterface.classList.add('popup-window-interface');
-
-        this.popupControllers = document.createElement('div');
-        this.popupControllers.classList.add('popup-window-controllers');
+        this.popupWindowColor = params.popupWindowColor ? params.popupWindowColor : '#fff';
+        this.body = document.querySelector('body');
     }
 
     generate() {
@@ -52,8 +45,49 @@ class BasePopup {
         return parent;
     }
 
-    initPopup(element, popup) {
-        this.appendNode(element, popup);
+    initPopup() {
+        this.appendNode(this.body, this.popupWrap);
+    }
+
+    destroyPopup() {
+        if (!this.body.querySelector('.' + this.classes.popupWrap)) return false;
+
+        this.body.removeChild(this.body.querySelector('.' + this.classes.popupWrap));
+    }
+
+    /* Набор методов для конструирования */
+
+    createWrap() {
+        this.popupWrap = document.createElement('div');
+        this.popupWrap.classList.add(this.classes.popupWrap);
+    }
+
+    createLayout() {
+        this.popupLayout = document.createElement('div');
+        this.popupLayout.classList.add(this.classes.popupLayout);
+    }
+
+    createWindow() {
+        this.popupWindow = document.createElement('div');
+        this.popupWindow.classList.add(this.classes.popupWindow);
+    }
+
+    createInterface() {
+        this.popupInterface = document.createElement('div');
+        this.popupInterface.classList.add(this.classes.popupInterface);
+    }
+
+    createControllers() {
+        this.popupControllers = document.createElement('div');
+        this.popupControllers.classList.add(this.classes.popupControllers);
+    }
+
+    /* Метод для стилизации попапа */
+
+    setStyles() {
+        this.popupLayout.style.opacity = this.layoutIsSet ? this.layoutOpacity : 0;
+        this.popupLayout.style.background = this.layoutColor;
+        this.popupWindow.style.background = this.popupWindowColor;
     }
 }
 
