@@ -3,26 +3,53 @@
 .categories-page {
 
     .categories-list {
+        display: flex;
         margin-top: 24px;
         flex-direction: column;
         max-height: 600px;
-        flex-wrap: wrap;
 
         .category-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            position: relative;
+            display: block;
+            height: 150px;
+            margin-bottom: 20px;
+            overflow: hidden;
             color: @cWhite;
-            background: #73a161;
             border-radius: 10px;
             transition: cursor @transitTime;
 
-            &:hover {
-                cursor: pointer;
+            &.green {
+                background: green;
+            }
 
-                .img-block {
-                    padding-bottom: 40px;
+            &.red {
+                background: red;
+            }
+
+            &.purple {
+                background: purple;
+            }
+
+            &:hover {
+                overflow: initial;
+
+                .wrapper {
+                    position: absolute;
+                    transform: translateY(-50px);
                 }
+            }
+
+            .wrapper {
+                .size(100%);
+                display: flex;
+                top: 0;
+                left: 0;
+                flex-direction: column;
+                flex-wrap: wrap;
+                align-items: center;
+                transition: transform @transitTime;
+                background: inherit;
+                border-radius: @borderRadius;
             }
 
             .header {
