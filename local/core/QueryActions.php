@@ -24,7 +24,6 @@ class QueryActions {
         $errors = $query->errorInfo();
 
         if ($errors[0] !== PDO::ERR_NONE) {
-            while(ob_get_length()){ob_end_clean();}echo("<pre>");print_r($errors[2]);echo("</pre>");die();
         }
         return true;
     }

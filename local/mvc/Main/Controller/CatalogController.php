@@ -35,7 +35,6 @@ class CatalogController extends Controller {
 
     public function categoriesAction() {
         $this->categories = $this->model->getCategoriesDepth(3);
-        while(ob_get_length()){ob_end_clean();}echo("<pre>");print_r($this->categories);echo("</pre>");die();
         foreach($this->categories as $category) {
             $category->link = '/catalog/category/' . $category->catalog_category_id . '/';
         }

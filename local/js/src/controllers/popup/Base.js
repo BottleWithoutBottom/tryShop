@@ -7,6 +7,8 @@ class BasePopup {
          * message - string
          * cancel - string
          *
+         *
+         * successLink - string,
          * */
         this.classes = {
             popupWrap: 'popup-wrap',
@@ -14,11 +16,14 @@ class BasePopup {
             popupWindow: 'popup-window',
             popupInterface: 'popup-window-interface',
             popupControllers: 'popup-window-controllers',
+            popupControllersButtonClass: 'popup-window-button',
+            popupControllersButtonCancelClass: 'cancel',
+            popupControllersButtonCancelJsClass: 'js-cancel',
         };
 
         this.message = params.message ? params.message : '';
-        this.success = params.success ? params.success : '';
-        this.cancel =    params.cancel ? params.cancel : '';
+        this.success = params.success ? params.success : 'Ок';
+        this.cancel =  params.cancel ? params.cancel : 'Отмена';
 
         this.type = type ? type : 'success';
         this.layoutIsSet = params.layoutIsSet ? params.layoutIsSet : true;
@@ -47,6 +52,10 @@ class BasePopup {
 
     initPopup() {
         this.appendNode(this.body, this.popupWrap);
+
+        this.popupControllersCancelBtn.addEventListener('click', () => {
+            this.destroyPopup();
+        });
     }
 
     destroyPopup() {
@@ -82,12 +91,30 @@ class BasePopup {
         this.popupControllers.classList.add(this.classes.popupControllers);
     }
 
+    setCancelBtn() {
+        if (this.popupControllers) {
+            this.popupControllersCancelBtn = document.createElement('a');
+            this.popupControllersCancelBtn.innerHTML = this.cancel;
+            this.popupControllersCancelBtn.classList.add(this.classes.popupControllersButtonCancelClass);
+            this.popupControllersCancelBtn.classList.add(this.classes.popupControllersButtonCancelJsClass);
+            this.setLinkHref(this.popupControllersCancelBtn, 'javascript:void(0)');
+            this.popupControllersCancelBtn.classList.add(this.classes.popupControllersButtonClass);
+            this.appendNode(this.popupControllers, this.popupControllersCancelBtn);
+        }
+    }
+
     /* Метод для стилизации попапа */
 
     setStyles() {
         this.popupLayout.style.opacity = this.layoutIsSet ? this.layoutOpacity : 0;
         this.popupLayout.style.background = this.layoutColor;
         this.popupWindow.style.background = this.popupWindowColor;
+    }
+
+    setLinkHref(link, url) {
+        if (!link || !url) return false;
+        link.setAttribute('href', url);
+        return true;
     }
 }
 
